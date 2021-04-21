@@ -37,5 +37,9 @@ export default class IndexPage extends Vue {
   get records() {
     return weatherStore.items
   }
+
+  async created() {
+    await weatherStore.load()
+  }
 }
 </script>

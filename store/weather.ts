@@ -1,4 +1,10 @@
-import { Module, VuexModule } from 'nuxt-property-decorator'
+import {
+  Module,
+  VuexAction,
+  VuexModule,
+  VuexMutation,
+} from 'nuxt-property-decorator'
+import { WeatherApi } from '~/api/weather'
 import { IWeatherRecord } from '~/types'
 
 @Module({
@@ -7,8 +13,6 @@ import { IWeatherRecord } from '~/types'
   namespaced: true,
 })
 export default class WeatherModule extends VuexModule {
-  // TODO: read records every 2 minutes from http://api.openweathermap.org/data/2.5/weather?q=Madrid&appid=79c06f01f69f3f8a9cb88a7949c4a6d5&units=metric
-
   items: IWeatherRecord[] = [
     {
       coord: {
@@ -89,4 +93,21 @@ export default class WeatherModule extends VuexModule {
       name: 'Madrid',
     },
   ]
+
+  @VuexMutation
+  SET_ITEMS(items: IWeatherRecord[]) {
+    this.items = items
+  }
+
+  @VuexAction({
+    rawError: true,
+  })
+  async load() {
+    // TODO: execute this action every 2 minutes
+    const cities = ['Madrid', 'Barcelona']
+    const promises = cities.map((city) => WeatherApi.getCurrentWeather(city))
+    const records = await Promise.all(promises)
+
+    this.SET_ITEMS(records)
+  }
 }
