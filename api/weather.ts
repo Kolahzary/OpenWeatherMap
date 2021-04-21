@@ -8,7 +8,7 @@ export const WeatherApi = {
     units = 'metric'
   ): Promise<IWeatherRecord> {
     return $axios.$request<IWeatherRecord>({
-      url: `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${appId}&units=${units}`,
+      url: `/data/2.5/weather?q=${city}&appid=${appId}&units=${units}`,
       method: 'GET',
     })
   },
