@@ -16,6 +16,8 @@ import { weatherStore } from '~/store'
 
 @Component
 export default class IndexPage extends Vue {
+  intervalId: number | null = null
+
   headers = [
     {
       text: 'Date',
@@ -40,6 +42,16 @@ export default class IndexPage extends Vue {
 
   async created() {
     await weatherStore.load()
+
+    this.intervalId = setInterval(async () => {
+      await weatherStore.load()
+    }, 2 * 60 * 1000) as any
+  }
+
+  beforeDestroy() {
+    if (this.intervalId) {
+      clearInterval(this.intervalId)
+    }
   }
 }
 </script>
