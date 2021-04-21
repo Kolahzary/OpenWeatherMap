@@ -28,6 +28,11 @@ export default class WeatherModule extends VuexModule {
     const promises = cities.map((city) => WeatherApi.getCurrentWeather(city))
     const records = await Promise.all(promises)
 
-    this.ADD_ITEMS(records)
+    // Don't allow adding duplicate records for same city (Weather data on server is not updated every seconds)
+    const recordsToAdd = records.filter(
+      (x) => !this.items.some((y) => x.id === y.id && x.dt === y.dt)
+    )
+
+    this.ADD_ITEMS(recordsToAdd)
   }
 }
