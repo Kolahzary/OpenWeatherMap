@@ -32,6 +32,14 @@
           {{ item.main.temp_max }}
         </v-chip>
       </template>
+      <template #item.weather[0].icon="{ item }">
+        <v-img
+          :alt="item.weather[0].description"
+          :src="
+            'http://openweathermap.org/img/wn/' + item.weather[0].icon + '.png'
+          "
+        />
+      </template>
     </v-data-table>
   </v-row>
 </template>
@@ -64,6 +72,7 @@ export default class IndexPage extends Vue {
     { filterable: false, text: 'Lat', value: 'coord.lat' },
     { filterable: false, text: 'Lon', value: 'coord.lon' },
     { filterable: false, text: 'Description', value: 'weather[0].description' },
+    { filterable: false, text: 'Icon', value: 'weather[0].icon' },
   ]
 
   // Adds an unique key to records
