@@ -1,6 +1,8 @@
 # OpenWeatherMap API Project
 
-Weather monitor for Madrid and Barcelona
+Weather monitor for Madrid and Barcelona 
+
+This was a test project after technichal interview of Atlann Company, They gave me one week deadline and I've managed to complete all requirements and send back the results in 5 hours.
 
 ## Build Setup
 
